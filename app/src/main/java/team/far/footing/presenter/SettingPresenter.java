@@ -18,7 +18,7 @@ public class SettingPresenter {
 
     public void cachesize() {
         String cachesize = fileModel.getCacheFormatSize();
-        settingVu.showCache(cachesize);
+        if (settingVu != null) settingVu.showCache(cachesize);
     }
 
     public void cleancache() {

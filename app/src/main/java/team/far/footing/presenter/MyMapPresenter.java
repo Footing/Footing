@@ -1,5 +1,8 @@
 package team.far.footing.presenter;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +32,7 @@ public class MyMapPresenter {
 
 
     private void showmlist() {
-        iMyMapVu.showLoading("玩命加载中...");
+        if (iMyMapVu != null) iMyMapVu.showLoading("玩命加载中...");
 
         mapModel.get_map_byuserbean(BmobUtils.getCurrentUser(), new FindListener<MapBean>() {
             @Override
@@ -43,17 +46,30 @@ public class MyMapPresenter {
                             tempList.add(mapBean);
                         }
                     }
-                    iMyMapVu.stopLoading();
-                    mapRyViewAdapter = new MapRyViewAdapter(tempList, iMyMapVu.getActivity());
-                    iMyMapVu.showmaplist(mapRyViewAdapter);
+                    if (iMyMapVu != null) iMyMapVu.stopLoading();
+                    if (tempList.size() != 0) {
+                        if (iMyMapVu != null) {
+                            mapRyViewAdapter = new MapRyViewAdapter(tempList, iMyMapVu.getActivity());
+                            iMyMapVu.showmaplist(mapRyViewAdapter);
+                        }
+                    } else {
+                        if (iMyMapVu != null) {
+                            iMyMapVu.stopLoading();
+                            iMyMapVu.showEmpty();
+                        }
+                    }
                 } else {
-                    iMyMapVu.showEmpty();
+                    if (iMyMapVu != null) {
+                        iMyMapVu.stopLoading();
+                        iMyMapVu.showEmpty();
+                    }
                 }
             }
 
             @Override
             public void onError(int i, String s) {
-
+                iMyMapVu.stopLoading();
+                if (iMyMapVu != null) Toast.makeText((Activity) iMyMapVu, BmobUtils.searchCode(i), Toast.LENGTH_SHORT).show();
             }
         });
 
