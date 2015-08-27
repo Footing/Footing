@@ -11,4 +11,10 @@ public interface IAddFriendVu {
     void showfriends(RecyclerView.Adapter adapter);
 
     void stopRefresh();
+
+    void showEmpty(String s);
+
+    void showSearchProgress();
+
+    void dismissSearchProgress();
 }

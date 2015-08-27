@@ -28,7 +28,7 @@
         android:textSize="16sp"
         android:textColorHint="@color/divider_color"
         android:layout_height="wrap_content"
-        android:hint="查询"
+        android:hint="请输入对方昵称"
         android:textColor="@color/secondary_text" />
 
     <ImageView
@@ -57,5 +57,24 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+
+    <FrameLayout
+        android:layout_below="@+id/ll_add_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="256dp">
+        <TextView
+            android:id="@+id/add_firends_recycler_view_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:lineSpacingExtra="16dp"
+            android:text="：( 没找到这个人"
+            android:textColor="@color/accent_color"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <include layout="@layout/view_progress"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

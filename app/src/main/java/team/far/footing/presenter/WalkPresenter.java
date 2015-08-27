@@ -263,6 +263,12 @@ public class WalkPresenter {
                             + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()
                             + "," + bdLocation.getProvince() + "," + bdLocation.getStreet());
                 }
+
+                // 回来的时候把镜头移动到当前位置
+                if (appStatus == STATUS_HOME_BACK) {
+                    v.moveCamera2Location(latLng);
+                }
+
                 // 开始步行才记录（请求失败就不要记录了）
                 if (isWalking && bdLocation.getLatitude() != 4.9E-324) {
                     // 如果不是刚从home回来，就慢慢画

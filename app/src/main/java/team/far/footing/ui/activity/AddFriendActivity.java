@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,6 +32,8 @@ public class AddFriendActivity extends BaseActivity implements IAddFriendVu, Swi
     @InjectView(R.id.bt_query)
     ImageView btQuery;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.add_firends_recycler_view_empty) TextView mEmptyView;
+    @InjectView(R.id.progress_wheel) ProgressWheel progressWheel;
 
     private AddFriendPresenter addFriendPresenter;
 
@@ -77,6 +82,7 @@ public class AddFriendActivity extends BaseActivity implements IAddFriendVu, Swi
 
     @Override
     public void showfriends(RecyclerView.Adapter adapter) {
+        swipeRefreshWidget.setVisibility(View.VISIBLE);
         mRecyclerview.setAdapter(adapter);
     }
 
@@ -84,6 +90,24 @@ public class AddFriendActivity extends BaseActivity implements IAddFriendVu, Swi
     public void stopRefresh() {
         swipeRefreshWidget.setRefreshing(false);
     }
+
+    @Override
+    public void showEmpty(String s) {
+        swipeRefreshWidget.setVisibility(View.GONE);
+        mEmptyView.setText(s);
+        mEmptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSearchProgress() {
+        progressWheel.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void dismissSearchProgress() {
+        progressWheel.setVisibility(View.GONE);
+    }
+
 
     @Override
     public void onRefresh() {

@@ -34,30 +34,52 @@ public class AddFriendPresenter {
         userModel.queryUserById(s, new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
+                if (iAddFriendVu != null) iAddFriendVu.showSearchProgress();
                 if (object.size() == 0) {
 
                     userModel.queryUserByName(s, new OnQueryFriendListener() {
                         @Override
                         public void onSuccess(List<Userbean> object) {
-                            friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                            if (iAddFriendVu != null) iAddFriendVu.showfriends(friendsRyViewAdapter);
+                            if (iAddFriendVu != null) {
+                                if (object.size() > 0) {
+                                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                                    iAddFriendVu.showfriends(friendsRyViewAdapter);
+                                } else {
+                                    iAddFriendVu.showEmpty("没有找到这个人哦~");
+                                }
+                                iAddFriendVu.dismissSearchProgress();
+                            }
                         }
 
                         @Override
                         public void onError(int code, String msg) {
-
+                            if (iAddFriendVu != null) {
+                                iAddFriendVu.showEmpty("查找失败了！");
+                                iAddFriendVu.dismissSearchProgress();
+                            }
                         }
                     });
 
                 } else {
                     friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                    if (iAddFriendVu != null) iAddFriendVu.showfriends(friendsRyViewAdapter);
+                    if (iAddFriendVu != null) {
+                        if (object.size() > 0) {
+                            friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                            iAddFriendVu.showfriends(friendsRyViewAdapter);
+                        } else {
+                            iAddFriendVu.showEmpty("没有找到这个人哦~");
+                        }
+                        iAddFriendVu.dismissSearchProgress();
+                    }
                 }
             }
 
             @Override
             public void onError(int code, String msg) {
-
+                if (iAddFriendVu != null) {
+                    iAddFriendVu.showEmpty("查找失败了！");
+                    iAddFriendVu.dismissSearchProgress();
+                }
             }
         });
 

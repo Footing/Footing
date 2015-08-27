@@ -47,7 +47,7 @@ public class LaunchActivity extends BaseActivity {
                     LaunchActivity.this.startActivity(intent);
                     LaunchActivity.this.finish();
                 }
-            }, 2000);
+            }, 1800);
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -57,7 +57,7 @@ public class LaunchActivity extends BaseActivity {
                     LaunchActivity.this.startActivity(intent);
                     LaunchActivity.this.finish();
                 }
-            }, 2000);
+            }, 1800);
         }
     }
 }
